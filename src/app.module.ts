@@ -7,6 +7,7 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
 import { EventsModule } from './events/events.module';
 import { AuthGuard } from './guards/auth.guard';
 import { PrismaModule } from './prisma/prisma.module';
+import { RoleGuard } from './guards/role.guard';
 
 @Module({
   imports: [
@@ -36,6 +37,6 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthGuard],
+  providers: [AppService, AuthGuard, RoleGuard],
 })
 export class AppModule {}
