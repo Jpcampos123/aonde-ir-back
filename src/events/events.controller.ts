@@ -15,8 +15,9 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { RoleGuard } from 'src/guards/role.guard';
-import { Roles } from 'src/decorators/role.dcorator';
+
 import { Role } from 'src/enums/role.enum';
+import { Roles } from 'src/role/role.decorator';
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller('events')
