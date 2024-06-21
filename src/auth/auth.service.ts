@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 
 import { CreateAuthDto } from './dto/create-auth.dto';

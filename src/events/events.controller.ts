@@ -13,11 +13,11 @@ import {
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { RoleGuard } from 'src/guards/role.guard';
+import { AuthGuard } from '../guards/auth.guard';
+import { RoleGuard } from '../guards/role.guard';
 
-import { Role } from 'src/enums/role.enum';
-import { Roles } from 'src/role/role.decorator';
+import { Role } from '../enums/role.enum';
+import { Roles } from '../role/role.decorator';
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller('events')
