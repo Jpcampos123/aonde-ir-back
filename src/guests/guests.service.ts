@@ -14,8 +14,6 @@ export class GuestsService {
       },
     });
 
-    console.log(userAlreadyExists);
-
     if (userAlreadyExists) {
       throw new UnauthorizedException('Erro');
     }
@@ -29,11 +27,23 @@ export class GuestsService {
   }
 
   async findByEvent(event_id: string) {
-    return await this.prismaService.guests.findMany({
+    const guests = await this.prismaService.guests.findMany({
       where: {
         event_id,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            photo: true,
+          },
+        },
+      },
     });
+    const count = await this.prismaService.guests.count();
+
+    return { guests, count };
   }
 
   findOne(id: number) {

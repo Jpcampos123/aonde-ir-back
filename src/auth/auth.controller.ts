@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -24,9 +25,18 @@ export class AuthController {
     return await this.authService.create(data);
   }
 
+  @Post('many')
+  async createMany(@Body() data: CreateAuthDto[]) {
+    return await this.authService.createMany(data);
+  }
   @Post('session')
   async login(@Body() data: User) {
     return await this.authService.login(data);
+  }
+
+  @Post('teste')
+  async loginTest(@Body() data: User) {
+    return await this.authService.loginTest(data);
   }
 
   @UseGuards(AuthGuard)
@@ -36,6 +46,7 @@ export class AuthController {
     // , data: req.user
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.authService.findAll();
@@ -51,9 +62,9 @@ export class AuthController {
     return this.authService.update(+id, updateAuthDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Delete()
+  remove(@Query('phone') phone: string) {
+    return this.authService.remove(phone);
   }
 
   @Post('forget')

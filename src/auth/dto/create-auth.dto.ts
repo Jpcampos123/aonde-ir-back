@@ -37,3 +37,7 @@ export class CreateAuthDto {
   // @IsEnum(Role)
   // role: number;
 }
+
+export class CreateAuthDtoList {
+  data: CreateAuthDto[];
+}

@@ -39,6 +39,7 @@ export class AuthService {
       },
     );
   }
+
   async create(data: CreateAuthDto) {
     if (!data.email) {
       throw new UnauthorizedException('E-mail e/ ou senha incorretos.');
@@ -57,6 +58,13 @@ export class AuthService {
     const passwordHash = await hash(data.password, 8);
     data.password = passwordHash;
     await this.prisma.user.create({
+      data,
+    });
+    return { Success: true };
+  }
+
+  async createMany(data: CreateAuthDto[]) {
+    await this.prisma.user.createMany({
       data,
     });
     return { Success: true };
@@ -102,6 +110,28 @@ export class AuthService {
     };
   }
 
+  async loginTest(data: VerifyAuthDto) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('E-mail e/ ou senha incorretos.');
+    }
+
+    const token = await this.createToken(user);
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      token: token,
+      phone: user.phone,
+    };
+  }
+
   async checkToken(token: string) {
     try {
       const data = await this.jwtService.verify(token, {
@@ -115,8 +145,11 @@ export class AuthService {
     }
   }
 
-  findAll() {
-    return this.prisma.user.findMany();
+  async findAll() {
+    const users = await this.prisma.user.findMany();
+    const count = await this.prisma.user.count();
+
+    return { users, count };
   }
 
   async findOne(id: string) {
@@ -131,8 +164,14 @@ export class AuthService {
     return `This action updates a #${id} auth`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async remove(phone) {
+    return await this.prisma.user.deleteMany({
+      where: {
+        phone: {
+          contains: phone,
+        },
+      },
+    });
   }
 
   async forget(email: string) {
