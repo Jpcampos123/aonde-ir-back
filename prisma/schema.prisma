@@ -62,7 +62,7 @@ model Guests {
   id       String       @id @default(uuid())
   status   StatusGuests
   user     User         @relation(fields: [user_id], references: [id])
-  user_id  String
+  user_id  String       @unique
   event    Events       @relation(fields: [event_id], references: [id])
   event_id String
 }

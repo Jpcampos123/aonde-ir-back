@@ -8,6 +8,7 @@ import { EventsModule } from './events/events.module';
 import { AuthGuard } from './guards/auth.guard';
 import { PrismaModule } from './prisma/prisma.module';
 import { RoleGuard } from './guards/role.guard';
+import { GuestsModule } from './guests/guests.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { RoleGuard } from './guards/role.guard';
     AuthModule,
     EventsModule,
     PrismaModule,
+    GuestsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AuthGuard, RoleGuard],
