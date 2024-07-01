@@ -46,8 +46,10 @@ export class GuestsService {
     return { guests, count };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} guest`;
+  async findOne(id: string) {
+    return await this.prismaService.guests.findFirst({
+      where: { id },
+    });
   }
 
   update(id: number, updateGuestDto: UpdateGuestDto) {

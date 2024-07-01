@@ -31,8 +31,10 @@ export class EventsService {
     return events;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: string) {
+    return await this.prismaService.events.findFirst({
+      where: { id },
+    });
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {

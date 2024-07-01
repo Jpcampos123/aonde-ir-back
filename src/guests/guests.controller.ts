@@ -32,7 +32,7 @@ export class GuestsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.guestsService.findOne(+id);
+    return this.guestsService.findOne(id);
   }
 
   @Patch(':id')
