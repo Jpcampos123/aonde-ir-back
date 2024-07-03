@@ -32,9 +32,17 @@ export class EventsService {
   }
 
   async findOne(id: string) {
-    return await this.prismaService.events.findFirst({
+    const event = await this.prismaService.events.findFirst({
       where: { id },
     });
+
+    const guests = await this.prismaService.guests.findMany({
+      where: {
+        event_id: id,
+      },
+    });
+
+    return { event, guests, count: guests.length };
   }
 
   update(id: number, updateEventDto: UpdateEventDto) {

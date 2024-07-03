@@ -10,7 +10,7 @@ export class GuestsService {
   async create(createGuestDto: CreateGuestDto, req) {
     const userAlreadyExists = await this.prismaService.guests.findFirst({
       where: {
-        id: req.tokenPayload.id,
+        user_id: req.tokenPayload.id,
       },
     });
 
@@ -18,12 +18,18 @@ export class GuestsService {
       throw new UnauthorizedException('Erro');
     }
 
-    return await this.prismaService.guests.create({
+    const guest = await this.prismaService.guests.create({
       data: {
         ...createGuestDto,
         user_id: req.tokenPayload.id,
       },
     });
+
+    if (!guest) {
+      throw new UnauthorizedException('Convidado não computado');
+    }
+
+    return guest;
   }
 
   async findByEvent(event_id: string) {
@@ -41,7 +47,15 @@ export class GuestsService {
         },
       },
     });
-    const count = await this.prismaService.guests.count();
+    const count = await this.prismaService.guests.count({
+      where: {
+        event_id,
+      },
+    });
+
+    if (!count && !guests) {
+      throw new UnauthorizedException('Algo de errado ao Buscar');
+    }
 
     return { guests, count };
   }

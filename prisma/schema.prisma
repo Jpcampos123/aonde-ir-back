@@ -13,8 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 enum StatusEvents {
   before
   during
@@ -62,7 +60,7 @@ model Guests {
   id       String       @id @default(uuid())
   status   StatusGuests
   user     User         @relation(fields: [user_id], references: [id])
-  user_id  String       @unique
+  user_id  String
   event    Events       @relation(fields: [event_id], references: [id])
   event_id String
 }
