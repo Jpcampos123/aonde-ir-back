@@ -40,6 +40,15 @@ export class EventsService {
       where: {
         event_id: id,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            photo: true,
+          },
+        },
+      },
     });
 
     return { event, guests, count: guests.length };
