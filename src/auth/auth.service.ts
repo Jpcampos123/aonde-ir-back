@@ -31,6 +31,7 @@ export class AuthService {
         email: user.email,
         role: user.role,
         photo: user.photo,
+        phone: user.phone,
       },
       {
         expiresIn: '30 days',
