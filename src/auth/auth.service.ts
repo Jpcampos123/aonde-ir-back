@@ -109,6 +109,8 @@ export class AuthService {
       email: user.email,
       token: token,
       phone: user.phone,
+      photo: user.photo,
+      role: user.role,
     };
   }
 
@@ -131,6 +133,8 @@ export class AuthService {
       email: user.email,
       token: token,
       phone: user.phone,
+      photo: user.photo,
+      role: user.role,
     };
   }
 
