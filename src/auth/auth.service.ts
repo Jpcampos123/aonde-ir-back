@@ -54,14 +54,19 @@ export class AuthService {
     });
 
     if (userAlreadyExists) {
-      throw new UnauthorizedException('E-mail e/ ou senha incorretos.');
+      throw new UnauthorizedException('Usúario já existe');
     }
 
     const passwordHash = await hash(data.password, 8);
     data.password = passwordHash;
-    await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data,
     });
+
+    if (!user) {
+      throw new UnauthorizedException('Dados Incorretos!');
+    }
+
     return { Success: true };
   }
 
